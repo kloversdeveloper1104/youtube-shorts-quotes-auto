@@ -23,7 +23,9 @@ CLIENT_SECRETS_FILE = "client_secret.json"
 
 def main() -> None:
     flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
-    creds = flow.run_local_server(port=0, prompt="consent", access_type="offline")
+    creds = flow.run_local_server(
+        port=8765, prompt="consent", access_type="offline", open_browser=False
+    )
 
     print("\n===== 以下をGitHub Secretsに登録してください =====")
     print(f"YT_CLIENT_ID={creds.client_id}")

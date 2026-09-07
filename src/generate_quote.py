@@ -69,10 +69,10 @@ def _from_gemini(history: list[str]) -> dict | None:
     if not api_key:
         return None
     try:
-        import google.generativeai as genai
+        from google import genai
 
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        client = genai.Client(api_key=api_key)
+        model_name = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite")
         category = random.choice(CATEGORIES)
         avoid = "\n".join(f"- {h}" for h in history[-15:]) or "(なし)"
         prompt = f"""あなたはYouTube Shorts向けの日本語モチベーション名言クリエイターです。
@@ -88,7 +88,7 @@ def _from_gemini(history: list[str]) -> dict | None:
 出力は次のJSON形式のみ。説明文やコードブロックは付けないこと:
 {{"quote": "ここに名言", "title": "動画タイトル(20文字以内、絵文字1つ程度可)"}}
 """
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(model=model_name, contents=prompt)
         text = response.text.strip()
         if text.startswith("```"):
             text = text.strip("`")
