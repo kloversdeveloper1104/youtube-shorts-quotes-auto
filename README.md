@@ -11,6 +11,18 @@ GitHub Actions上で1日2回、以下を自動で行います。
 
 ---
 
+## セットアップ状況(このデプロイでは完了済み)
+
+- 投稿先チャンネル: 「モチベ名言ショート」(`kloversmovie@gmail.com` アカウント内、既存の `youtube-shorts-ai` プロジェクトとは別チャンネル)
+- OAuthクライアントは既存プロジェクト(`youtube-shorts-ai`, GCPプロジェクトID: `youtube-shorts-ai-507605`)のものを再利用し、ローカル認証用に追加のリダイレクトURI(`http://localhost:8765/`)を登録済み
+- GitHub Secrets(`YT_CLIENT_ID` / `YT_CLIENT_SECRET` / `YT_REFRESH_TOKEN` / `GEMINI_API_KEY` / `PEXELS_API_KEY`)は登録済み
+- 実際にGitHub Actionsから初回投稿のテストに成功: https://youtube.com/shorts/EVAGn3dZx8k
+- 以降は `.github/workflows/publish_short.yml` のスケジュール通り(日本時間 8:00 / 20:00)自動投稿されます
+
+以下の「1〜6」の手順は、**別チャンネル/別プロジェクトで一から構築する場合の一般的な手順**です。今回のデプロイでは実施済みのため、通常は読み飛ばして構いません。
+
+---
+
 ## 0. 全体の流れ(所要時間目安 30〜60分、費用は基本0円)
 
 1. Google Cloud で YouTube Data API を有効化し、OAuthクライアントを作る
